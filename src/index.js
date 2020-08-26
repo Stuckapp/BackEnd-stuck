@@ -3,6 +3,7 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 //iniciadores
 const app = express();
+const connect = require("./DataBase");
 
 // configuraciones
 app.set("port", process.env.PORT || 3000);
@@ -26,9 +27,14 @@ app.use(require("./routes/sellers"));
 // static files
 
 //server
-
-app.listen(app.get("port"), () => {
-  console.log("Server on port", app.get("port"));
-});
+connect
+  .connect()
+  .then((db) => {
+    console.log("DB is connected");
+    app.listen(app.get("port"), () => {
+      console.log("Server on port", app.get("port"));
+    });
+  })
+  .catch((err) => console.error(err));
 
 module.exports = app;

@@ -20,7 +20,9 @@ const SellerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  //FALTA EL TIMESTAMP INVESTIGAR COMO AGREGARLO
+  Date: {
+    timestamps: true,
+  },
 });
 
 module.exports = mongoose.model("Seller", SellerSchema);

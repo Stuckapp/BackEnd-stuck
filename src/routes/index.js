@@ -4,7 +4,11 @@ router.get("/", (req, res) => {
   res.send("lading");
 });
 
-router.get("/registro", (req, res) => {
+router.get("/registroUser", (req, res) => {
+  res.send("registro");
+});
+
+router.get("/registroSeller", (req, res) => {
   res.send("registro");
 });
 

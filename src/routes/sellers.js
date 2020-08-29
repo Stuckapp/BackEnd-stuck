@@ -5,15 +5,14 @@ const router = express.Router();
 router.get("/sellers/signinSeller", (req, res) => {
   res.send("Bienvenido");
 });
-router.post("/sellers/newSeller", (req, res) => {
-  console.log(req.body);
-  res.send("nuevo vendedor");
-});
+
 router.get("/sellers/singupSeller", (req, res) => {
   res.send("Formulario de registro Vendedor");
 });
 
-router.post("/sellers/postProducts", (req, res) => {
+//perfil de vendedor por checar 27/08/2020 19:51
+
+router.post("/productPost", (req, res) => {
   const { name, category, quantity, description, price, image } = req.body;
   const errors = [];
   if (!name) {

@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
-//modelo de Vendedor para registro
-const SellerSchema = new mongoose.Schema({
+
+const sellersSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
-    minlength: 2,
+    maxlength: 100,
+    minlength: 4,
   },
   email: {
     type: String,
@@ -19,10 +20,8 @@ const SellerSchema = new mongoose.Schema({
   adress: {
     type: String,
     required: true,
-  },
-  Date: {
-    timestamps: true,
+    minlength: 10,
   },
 });
 
-module.exports = mongoose.model("Seller", SellerSchema);
+module.exports = mongoose.model("Sellers", sellersSchema);

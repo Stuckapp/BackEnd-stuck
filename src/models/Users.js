@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
-//modelo de usuario para registro
-const UserSchema = new mongoose.Schema({
+
+const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
-    minlength: 2,
   },
   email: {
     type: String,
@@ -16,9 +15,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     min: 6,
   },
-  Date: {
-    timestamps: true,
-  },
 });
 
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("Users", userSchema);

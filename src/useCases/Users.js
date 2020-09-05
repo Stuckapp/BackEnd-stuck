@@ -1,55 +1,54 @@
+const Users = require("../models/Users");
 const bcrypt = require("../lib/bcrypt");
 const jwt = require("../lib/jwt");
-const Users = require("../models/User");
 
 function getAll() {
   return Users.find();
 }
 
-function getById(UsersId) {
-  return Users.findById(UsersId);
+function getById(userId) {
+  return Users.findById(userId);
+}
+//se crea un nuevo usuario y se condiciona con el if si este ya existe
+async function create(userData) {
+  const { email } = userData;
+  const user = await Users.findOne({
+    email,
+  });
+  //S
+  if (!user) {
+    return Users.create(userData);
+  } else {
+    throw Error("El email ya existe");
+  }
 }
 
-function create(UserData) {
-  return Users.create(UserData);
-}
-
-async function signup(UserData) {
-  const { password } = UserData;
+async function signup(userData) {
+  const { password } = userData;
   const passwordEncripted = await bcrypt.hash(password);
-  return User.create({
-    ...UserData,
+  return create({
+    ...userData,
     password: passwordEncripted,
   });
 }
 
 async function login(email, passwordPlain) {
-  const UserByEmail = await User.findOne({ email });
-  if (!UserByEmail) {
-    throw new Error("Tu e-mail es incorrecto");
+  const userByEmail = await Users.findOne({ email });
+  if (!userByEmail) {
+    throw new Error("Email not found");
   }
 
-  const isValid = await bcrypt.compare(passwordPlain, UserByEmail.password);
+  const isValid = await bcrypt.compare(passwordPlain, userByEmail.password);
   if (!isValid) {
-    throw new Error("Contraseña incorrecta");
+    throw new Error("Password not valid");
   }
-  return jwt.sign({ id: UserByEmail._id });
-}
-
-function deletee(UserId) {
-  return Users.findByIdAndRemove(UserId);
-}
-
-function update(UserId, dataUpdate) {
-  return Users.findByIdAndUpdate(UserId, dataUpdate);
+  return jwt.sign({ id: userByEmail._id });
 }
 
 module.exports = {
   getAll,
   getById,
   create,
-  deletee,
-  update,
   signup,
   login,
 };
